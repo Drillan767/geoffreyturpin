@@ -1,0 +1,165 @@
+.biography {
+    .user {
+        display: flex;
+
+        @media all and (max-width: 1023px){
+            padding: 0 1.25rem;
+        }
+
+        @media all and (max-width: 1024px) {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        img {
+            border: solid 10px #000000;
+
+            @media all and (min-width: 1024px){
+                width: 50%;
+            }
+        }
+
+        .description {
+            @media all and (min-width: 1024px){
+                margin-left: 30px;
+            }
+
+            h3 {
+                @media all and (max-width: 1024px) {
+                    margin-top: 10px;
+                }
+            }
+        }
+    }
+
+    /* TIMELINE */
+
+    .timeline {
+        margin-top: 60px;
+
+        @media all and (max-width: 1023px){
+            h3 {
+                margin-left: 30px;
+            }
+        }
+
+        ul {
+            li {
+                list-style-type: none;
+                position: relative;
+                width: 6px;
+                margin: 0 auto;
+                padding-top: 50px;
+                background: grey;
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    left: 50%;
+                    bottom: 0;
+                    transform: translateX(-50%);
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    background: inherit;
+                    transition: background .5s ease-in-out;
+                }
+
+                &:nth-child(odd) div {
+                    left: 45px;
+                    transform: translate3d(200px, 0, 0);
+
+                    &::before {
+                        left: -15px;
+                        border-width: 8px 16px 8px 0;
+                        border-color: transparent #004703 transparent transparent;
+                    }
+                }
+
+                &:nth-child(even) div {
+                    left: -439px;
+                    transform: translate3d(-200px, 0, 0);
+
+                    &::before {
+                        right: -15px;
+                        border-width: 8px 0 8px 16px;
+                        border-color: transparent transparent transparent #004703;
+                    }
+                }
+
+                &.in-view {
+                    background: #004703;
+
+                    & div {
+                        transform: none;
+                        visibility: visible;
+                        opacity: 1;
+                    }
+                }
+
+                div {
+                    position: relative;
+                    bottom: 0;
+                    color: #fff;
+                    width: 400px;
+                    padding: 15px;
+                    background: #004703;
+                    visibility: hidden;
+                    opacity: 0;
+                    transition: all .5s ease-in-out;
+
+                    &::before {
+                        content: '';
+                        position: absolute;
+                        bottom: 7px;
+                        width: 0;
+                        height: 0;
+                        border-style: solid;
+                    }
+
+                    time {
+                        font-family: "Simplifica", sans-serif;
+                        color: #fff;
+                        display: block;
+                        font-size: 1.8rem;
+                        font-weight: bold;
+                        margin-bottom: 8px;
+                    }
+                }
+            }
+        }
+    }
+
+    @media screen and (max-width: 900px) {
+
+        .timeline ul li {
+            div {
+                width: 250px;
+            }
+
+            &:nth-child(even) div {
+                left: -289px;
+            }
+        }
+    }
+
+    @media screen and (max-width: 600px) {
+        .timeline ul li {
+            margin-left: 20px;
+
+            &:nth-child(even) div {
+                left: 45px;
+
+                &::before {
+                    left: -15px;
+                    border-width: 8px 16px 8px 0;
+                    border-color: transparent #004703 transparent transparent;
+                }
+            }
+
+            div {
+                width: calc(100vw - 91px);
+            }
+        }
+    }
+}

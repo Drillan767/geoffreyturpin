@@ -1,0 +1,23 @@
+.contact {
+    padding: 0 15px;
+
+    @media all and (min-width: 768px){
+        width: 50%;
+        margin: auto;
+        padding: 0;
+    }
+
+    .errors, .success {
+        color: #fff;
+        padding: 10px 15px;
+        margin-bottom: 10px;
+    }
+
+    .errors {
+        background-color: #B91C1C;
+    }
+
+    .success {
+        background-color: #004703;
+    }
+}

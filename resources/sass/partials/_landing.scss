@@ -1,0 +1,82 @@
+.landing {
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../images/guitare.jpg');
+    height: 85vh;
+    background-size: cover;
+
+    .logo {
+
+        @media all and (min-width: 1024px){
+            position: absolute;
+        }
+
+        @media all and (min-width: 1280px) {
+            top: 2%;
+            right: 20%;
+        }
+
+        @media all and (min-width: 1024px) and (max-width: 1279px) {
+            top: 5%;
+            right: 20%;
+        }
+
+        @media all and (max-width: 1023px){
+            display: flex;
+            justify-content: center;
+
+            img {
+                margin-top: 5%;
+            }
+        }
+
+    }
+
+    .links {
+        display: flex;
+
+        @media all and (min-width: 768px){
+            position: absolute;
+        }
+
+        @media all and (min-width: 1024px) {
+            justify-content: space-between;
+        }
+
+        @media all and (min-width: 1280px) {
+            bottom: 45%;
+            right: 14.5%;
+            width: 480px;
+        }
+
+        @media all and (min-width: 1024px) and (max-width: 1279px){
+            bottom: 33%;
+            right: 8.5%;
+            width: 512px;
+        }
+
+        @media all and (min-width: 768px) and (max-width: 1023px){
+            bottom: 33%;
+            width: 100%;
+            justify-content: space-evenly;
+        }
+
+        @media all and (max-width: 767px){
+            margin-top: 10vh;
+            padding: 0 20px;
+            flex-direction: column;
+            text-align: center;
+
+            a:first-child {
+                margin-bottom: 20px;
+            }
+        }
+
+        a {
+            background-color: #000;
+            padding: 16px 50px;
+            font-size: 2.5rem;
+            font-variant: small-caps;
+            font-family: "Simplifica", sans-serif;
+            color: #fff;
+        }
+    }
+}
