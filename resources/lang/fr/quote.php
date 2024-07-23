@@ -1,0 +1,48 @@
+<?php
+
+return [
+    // STEP 1
+    'quote' => 'devis',
+    'new_quote' => 'Nouveau devis',
+    'last_name' => 'Nom',
+    'cookie_error' => "Vous ne pouvez plus modifier votre demande de devis ou vous n'avez pas le droit d'y accéder",
+    'first_name' => 'Prénom',
+    'email' => 'Adresse e-mail',
+    'currency' => 'Choix de la devise :',
+    'beginning_date' => 'Définir une date de début de travail ?',
+    'deadline' => 'Ajouter une deadline ?',
+    'pick_music' => 'Sélectionnez un type de musique',
+    'genre' => 'type de musique',
+    'length' => 'Durée de la composition',
+    'image' => 'Composition à l\'image ?',
+    'seconds' => 'Secondes',
+    'details' => 'Donnez plus de détails...',
+    'delete' => 'Supprimer',
+    'add' => 'Ajouter une nouvelle musique',
+    'back' => 'Retour',
+    'next' => 'Suivant',
+
+    // STEP 2
+    'created' => 'Devis créé.',
+    'updated' => 'Devis mit à jour.',
+    'selection' => 'Sélection',
+    'warning' => 'Vous pouvez toujours modifier votre devis avant de le soumettre. Si toutefois vous décidez d\'annuler la demande, celui ci ne sera pas conservé.',
+    'warning2' => 'Le prix affiché n\'est qu\'une estimation, et il n\'est que peu probable que cela soit le prix qu\'il vous sera fixé',
+    'start' => 'Début de travail souhaité',
+    'end' => 'Deadline souhaitée',
+    'description' => 'Informations complémentaires',
+    'pwt' => 'Prix Hors Taxe (HT)',
+    'length2' => 'Durée :',
+    'image2' => 'Composition à l\'image',
+    'detail' => 'Détail',
+    'no' => 'Aucune',
+    'rate' => 'Ratio',
+    'pps' => 'Facturation à la seconde',
+    'vat' => 'TVA',
+    'pnm' => 'Multiplicateur par nouvelle musique',
+    'bonus_deadline' => 'Bonus de deadline "avancée"',
+    'df' => 'd/m/Y',
+    'cancel' => '← Annuler',
+    'edit' => 'Modifier le devis',
+    'submit' => 'Soumettre le devis →'
+];

@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'meta_description' => "Geoffrey Turpin - Compositeur, musicien et artiste",
+    'landing' => 'Accueil',
+    'discover' => 'Découvrez',
+    'listen' => 'Écoutez',
+    'biography' => 'Biographie',
+    'journey' => 'Parcours',
+    'musics' => 'Musiques',
+    'articles' => 'Articles',
+    'contact' => 'Contact',
+    'lm' => 'Mentions légales',
+    'sitemap' => 'Plan du site',
+    'puremusic' => 'Musique pure',
+    'compoimage'=> 'Composée pour l\'image',
+    'compoimage2' => 'Composee pour l\'image',
+    'email' => 'Adresse Email',
+    'subject' => 'Objet',
+    'message' => 'Tapez votre message...',
+    'send' => 'Envoyer',
+    'sent' => 'Message envoyé avec succès. Merci !',
+    'soon' => 'Bientôt',
+    'soon_desc' => "De nombreux projets comprenant des films d'acteurs, des jeux vidéos et des films d'animation",
+    'recaptcha_error' => "Impossible de valider le reCaptcha, veuillez réessayer.",
+];

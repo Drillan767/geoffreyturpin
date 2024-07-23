@@ -1,0 +1,17 @@
+@font-face {
+    font-family: 'Harrison';
+    src: url('../fonts/Harrison.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Simplifica';
+    src: url('../fonts/simplifica.ttf') format('truetype');
+}
+
+.harrison {
+    font-size: 2rem;
+    font-variant: small-caps;
+    color: #004703;
+    font-weight: 400;
+    font-family: "Harrison", sans-serif;
+}

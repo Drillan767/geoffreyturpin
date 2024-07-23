@@ -1,17 +1,25 @@
 <?php
 
+use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+Route::get('/locale/{locale}', function($locale) {
+    Session()->put('locale', $locale);
+    return redirect()->back();
+})->name('language');
+
+Route::localized(function() {
+    Route::get('/', [HomeController::class, 'landing'])->name('home');
+    Route::get(__('routes.legal'), [HomeController::class, 'legal'])->name('legal');
+    Route::get(__('routes.biography'), [HomeController::class, 'biography'])->name('biography');
+    Route::get(__('routes.music'), [HomeController::class, 'music'])->name('musics');
+    Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+    Route::get('/articles', [PostController::class, 'index'])->name('articles');
+    Route::get('/article/{slug}', [PostController::class, 'show'])->name('article.show');
 });
 
 Route::get('/dashboard', function () {
