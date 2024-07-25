@@ -21,6 +21,7 @@ RUN addgroup \
 RUN apk add --no-cache \
     nodejs \
     npm \
+    caddy \
     git && \
     # Install PHP extensions
     docker-php-ext-install pdo pdo_mysql exif && \
@@ -50,4 +51,4 @@ RUN chown -R appuser:appuser storage bootstrap/cache
 EXPOSE 8080
 
 # Start PHP-FPM
-CMD ["php-fpm"]
+CMD ["/usr/bin/caddy", "-agree=true", "-conf=/var/www/html/Caddyfile"]
