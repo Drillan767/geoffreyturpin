@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Image\Enums\CropPosition;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -14,7 +15,7 @@ class Article extends Model implements HasMedia
 {
     use HasFactory, HasTags, HasTranslations, InteractsWithMedia;
 
-    protected $translatable = ['title', 'content', 'slug'];
+    protected array $translatable = ['title', 'content', 'slug'];
 
     protected $appends = ['tags'];
 
@@ -24,14 +25,10 @@ class Article extends Model implements HasMedia
             ->singleFile();
     }
 
-    /**
-     * @param Media|null $media
-     * @throws \Spatie\Image\Exceptions\InvalidManipulation
-     */
     public function registerMediaConversions(Media $media = null): void
     {
         $this->addMediaConversion('thumbnail')
-            ->crop('crop-center', 320, 320)
+            ->crop(320, 320)
             ->format('png');
     }
 

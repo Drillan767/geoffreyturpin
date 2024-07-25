@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\Request;
 use App\Http\Requests\ContactRequest;
 use App\Models\Biography;
 use App\Models\Music;
@@ -17,7 +21,7 @@ class HomeController extends Controller
         return view('front.landing');
     }
 
-    public function biography()
+    public function biography(): View|Factory|Application
     {
         $bio = Biography::orderBy('year', 'DESC')->get();
         $user = User::first();
@@ -25,14 +29,14 @@ class HomeController extends Controller
         return view('front.biography', compact('user', 'bio'));
     }
 
-    public function music()
+    public function music(): View|Factory|Application
     {
         $musics = Music::all();
 
         return view('front.music', compact('musics'));
     }
 
-    public function contact()
+    public function contact(): View|Factory|Application
     {
         return view('front.contact');
     }
@@ -56,7 +60,7 @@ class HomeController extends Controller
         return redirect()->back();
     }
 
-    public function legal()
+    public function legal(): View|Factory|Application
     {
         return view('front.legal');
     }

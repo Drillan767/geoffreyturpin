@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Tags\Tag;
 
 class PostController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request): View|Factory|Application
     {
         if ($request->tag) {
             $lang = app()->currentLocale();
@@ -42,7 +44,7 @@ class PostController extends Controller
         }
     }
 
-    public function show($slug)
+    public function show($slug): View|Factory|Application
     {
         $article = Article::all()->first(function ($article) use($slug) {
             return $article->getTranslation('slug', app()->getLocale()) === $slug;
@@ -50,6 +52,4 @@ class PostController extends Controller
 
         return view('front.articles.show', compact('article'));
     }
-
-
 }

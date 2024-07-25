@@ -20,9 +20,8 @@
     <link rel="apple-touch-icon" href="/apple-icon.png">
     <link rel="manifest" href="/manifest.webmanifest">
 
+    @vite('resources/sass/app.scss')
 
-    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-    <script src="{{ mix('js/app.js') }}" defer></script>
 </head>
 <body>
 <nav class="nav">

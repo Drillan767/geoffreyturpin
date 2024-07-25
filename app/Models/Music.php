@@ -10,5 +10,5 @@ class Music extends Model
 {
     use HasFactory, HasTranslations;
 
-    public $translatable = ['content'];
+    public array $translatable = ['content'];
 }

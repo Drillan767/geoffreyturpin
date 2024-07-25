@@ -10,5 +10,5 @@ class Biography extends Model
 {
     use HasFactory, HasTranslations;
 
-    public $translatable = ['text'];
+    public array $translatable = ['text'];
 }

@@ -22,7 +22,7 @@
     <link rel="apple-touch-icon" href="/apple-icon.png">
     <link rel="manifest" href="/manifest.webmanifest">
 
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    @vite('resources/sass/app.scss')
     <link rel="canonical" href="{{ url()->current() }}/">
 </head>
 

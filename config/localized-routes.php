@@ -5,45 +5,103 @@ return [
     /**
      * The locales you wish to support.
      */
-    'supported-locales' => ['fr', 'en'],
+    'supported_locales' => ['fr', 'en'],
 
     /**
-     * If you have a main locale and don't want
-     * to prefix it in the URL, specify it here.
-     *
-     * 'omit_url_prefix_for_locale' => 'en',
+     * The fallback locale to use when generating a route URL
+     * and the provided locale is not supported.
      */
-    'omit_url_prefix_for_locale' => 'fr',
+    'fallback_locale' => null,
 
     /**
-     * If you want to automatically set the locale
-     * for localized routes set this to true.
+     * If you have a main locale, and you want to omit
+     * its slug from the URL, specify it here.
      */
-    'use_locale_middleware' => true,
+    'omitted_locale' => 'fr',
 
     /**
-     * If true, this package will use 'codezero/laravel-localizer'
-     * to detect and set the preferred supported locale.
-     *
-     * For non-localized routes, it will look for a locale in the URL,
-     * in the session, in a cookie, in the browser or in the app config.
-     * This can be very useful if you have a generic home page.
-     *
-     * If a locale is detected, it will be stored in the session,
-     * in a cookie and as the app locale.
-     *
-     * If you disable this option, only localized routes will have a locale
-     * and only the app locale will be set (so not in the session or cookie).
-     *
-     * You can publish its config file and tweak it for your needs.
-     * This package will only override its 'supported-locales' option
-     * with the 'supported-locales' option in this file.
-     *
-     * For more info, visit:
-     * https://github.com/codezero-be/laravel-localizer
-     *
-     * This option only has effect if you use the SetLocale middleware.
+     * Set this option to true if you want to redirect URLs
+     * without a locale slug to their localized version.
+     * You need to register the fallback route for this to work.
      */
-    'use_localizer' => false,
+    'redirect_to_localized_urls' => false,
+
+    /**
+     * The status code when redirecting to localized URLs.
+     * 301 - permanently
+     * 302 - temporary
+     */
+    'redirect_status_code' => 301,
+
+    /**
+     * Set your custom 404 view. This view is localized.
+     * If the view does not exist, a normal 404 will be thrown.
+     * You need to register the fallback route for this to work.
+     */
+    '404_view' => 'errors.404',
+
+    /**
+     * The custom route action where we will set the locale of the routes
+     * that are registered within the Route::localized() closure.
+     * This can be detected by the RouteActionDetector.
+     */
+    'route_action' => 'locale',
+
+    /**
+     * The attribute on the user model that holds the locale,
+     * when using the UserDetector.
+     */
+    'user_attribute' => 'locale',
+
+    /**
+     * The session key that holds the locale,
+     * when using the SessionDetector and SessionStore.
+     */
+    'session_key' => 'locale',
+
+    /**
+     * The name of the cookie that holds the locale,
+     * when using the CookieDetector and CookieStore.
+     */
+    'cookie_name' => 'locale',
+
+    /**
+     * The lifetime of the cookie that holds the locale,
+     * when using the CookieStore.
+     */
+    'cookie_minutes' => 60 * 24 * 365, // 1 year
+
+    /**
+     * The detectors to use to find a matching locale.
+     * These will be executed in the order that they are added to the array!
+     */
+    'detectors' => [
+        CodeZero\LocalizedRoutes\Middleware\Detectors\RouteActionDetector::class, //=> required for scoped config
+        CodeZero\LocalizedRoutes\Middleware\Detectors\UrlDetector::class, //=> required
+        CodeZero\LocalizedRoutes\Middleware\Detectors\OmittedLocaleDetector::class, //=> required for omitted locale
+        CodeZero\LocalizedRoutes\Middleware\Detectors\UserDetector::class,
+        CodeZero\LocalizedRoutes\Middleware\Detectors\SessionDetector::class,
+        CodeZero\LocalizedRoutes\Middleware\Detectors\CookieDetector::class,
+        CodeZero\LocalizedRoutes\Middleware\Detectors\BrowserDetector::class,
+        CodeZero\LocalizedRoutes\Middleware\Detectors\AppDetector::class, //=> required
+    ],
+
+    /**
+     * Add any of the above detector class names here to make it trusted.
+     * When a trusted detector returns a locale, it will be used
+     * as the app locale, regardless if it's a supported locale or not.
+     */
+    'trusted_detectors' => [
+        CodeZero\LocalizedRoutes\Middleware\Detectors\RouteActionDetector::class //=> required for scoped config
+    ],
+
+    /**
+     * The stores to store the first matching locale in.
+     */
+    'stores' => [
+        CodeZero\LocalizedRoutes\Middleware\Stores\SessionStore::class,
+        CodeZero\LocalizedRoutes\Middleware\Stores\CookieStore::class,
+        CodeZero\LocalizedRoutes\Middleware\Stores\AppStore::class, //=> required
+    ],
 
 ];
