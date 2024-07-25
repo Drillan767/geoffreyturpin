@@ -1,0 +1,27 @@
+:8080 {
+    root * /var/www/html/public
+    php_fastcgi localhost:9000
+    file_server
+    encode gzip
+
+    # Handle Laravel's pretty URLs
+    try_files {path} {path}/ /index.php?{query}
+
+    # Deny access to sensitive files
+    @sensitive {
+        path *.yml *.ini *.log .htaccess .env
+        path /vendor/*
+        path /storage/*
+        path /bootstrap/*
+    }
+    respond @sensitive 404
+
+    # Optional: Add security headers
+    header {
+        -Server
+        Strict-Transport-Security "max-age=31536000;"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        Referrer-Policy "strict-origin-when-cross-origin"
+    }
+}

@@ -21,6 +21,7 @@ RUN addgroup \
 RUN apk add --no-cache \
     nodejs \
     npm \
+    caddy \
     git && \
     # Install PHP extensions
     docker-php-ext-install pdo pdo_mysql exif && \
@@ -28,11 +29,14 @@ RUN apk add --no-cache \
     # Install Composer
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+COPY ./ci/entrypoint.sh /etc/entrypoint.sh
+RUN chmod +x /etc/entrypoint.sh
+
 # Set working directory
 WORKDIR /var/www/html
 
 # Copy Laravel project files
-COPY --chown=appuser:appuser . .
+COPY --chown=appuser:appuser .. .
 
 # Switch user
 USER appuser
@@ -49,5 +53,4 @@ RUN chown -R appuser:appuser storage bootstrap/cache
 # Expose port 8080
 EXPOSE 8080
 
-# Start PHP-FPM
-CMD ["php-fpm"]
+ENTRYPOINT ["sh", "/etc/entrypoint.sh"]
