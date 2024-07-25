@@ -1,34 +1,53 @@
-FROM php:8-fpm
+FROM php:8.3-fpm-alpine
 
-RUN apt-get update -y && apt-get install -y \
-    curl \
-    openssl \
-    zip \
-    unzip \
-    git \
-    libonig-dev \
-    zlib1g-dev \
-    libfreetype6-dev \
-    libjpeg62-turbo-dev \
-    libmcrypt-dev \
-    libpng-dev
+ENV USER=appuser
+ENV GROUPNAME=$USER
+ENV UID=12345
+ENV GID=23456
 
-RUN useradd -ms /bin/bash gt2
+RUN addgroup \
+    --gid "$GID" \
+    "$GROUPNAME" \
+&&  adduser \
+    --disabled-password \
+    --gecos "" \
+    --home "$(pwd)" \
+    --ingroup "$GROUPNAME" \
+    --no-create-home \
+    --uid "$UID" \
+    $USER
 
-WORKDIR /app
-RUN chmod -R 777 /app
-COPY --chown=gt2:gt2 . /app
+# Install system dependencies
+RUN apk add --no-cache \
+    nodejs \
+    npm \
+    git && \
+    # Install PHP extensions
+    docker-php-ext-install pdo pdo_mysql exif && \
+    docker-php-ext-enable exif && \
+    # Install Composer
+    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
-RUN apt-get -yqq install exiftool
-RUN docker-php-ext-configure exif
-RUN docker-php-ext-install mysqli pdo pdo_mysql exif
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg
-RUN docker-php-ext-install -j$(nproc) gd
-RUN composer install
+# Set working directory
+WORKDIR /var/www/html
 
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
-RUN apt-get update && apt-get install -y nodejs
+# Copy Laravel project files
+COPY --chown=appuser:appuser . .
 
-CMD php artisan serve --host=0.0.0.0 --port=8080
+# Switch user
+USER appuser
+
+# Install Composer dependencies
+RUN composer install --no-interaction --optimize-autoloader --no-dev
+
+# Install NPM dependencies and build assets
+RUN npm install && npm run build
+
+# Set permissions
+RUN chown -R appuser:appuser storage bootstrap/cache
+
+# Expose port 8080
 EXPOSE 8080
+
+# Start PHP-FPM
+CMD ["php-fpm"]
