@@ -27,6 +27,7 @@
     "require-dev": {
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
+        "fly-apps/dockerfile-laravel": "^1.0",
         "laravel/sail": "^0.0.5",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
@@ -35,7 +36,10 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "0.0.0/composer-include-files": true
+        }
     },
     "extra": {
         "laravel": {
