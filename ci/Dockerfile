@@ -1,4 +1,4 @@
-FROM php:8.3-fpm-alpine
+FROM php:8.1-fpm-alpine
 
 ENV USER=appuser
 ENV GROUPNAME=$USER
@@ -21,13 +21,18 @@ RUN addgroup \
 RUN apk add --no-cache \
     nodejs \
     npm \
+    postgresql-dev \
     caddy \
     git && \
     # Install PHP extensions
-    docker-php-ext-install pdo pdo_mysql exif && \
+    docker-php-ext-install pdo pdo_pgsql exif && \
     docker-php-ext-enable exif && \
     # Install Composer
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+
+COPY ./ci/entrypoint.sh /etc/entrypoint.sh
+RUN chmod +x /etc/entrypoint.sh
 
 # Set working directory
 WORKDIR /var/www/html
@@ -39,10 +44,10 @@ COPY --chown=appuser:appuser . .
 USER appuser
 
 # Install Composer dependencies
-RUN composer install --no-interaction --optimize-autoloader --no-dev
+RUN composer update && composer install --no-interaction --optimize-autoloader --no-dev
 
 # Install NPM dependencies and build assets
-RUN npm install && npm run build
+RUN npm install && npm run production
 
 # Set permissions
 RUN chown -R appuser:appuser storage bootstrap/cache
@@ -50,5 +55,4 @@ RUN chown -R appuser:appuser storage bootstrap/cache
 # Expose port 8080
 EXPOSE 8080
 
-# Start PHP-FPM
-CMD ["/usr/bin/caddy", "-agree=true", "-conf=/var/www/html/Caddyfile"]
+ENTRYPOINT ["sh", "/etc/entrypoint.sh"]
