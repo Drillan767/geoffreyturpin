@@ -11,8 +11,13 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        $middleware->web(remove: [
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        ]);
         $middleware->web(append: [
             \App\Http\Middleware\HandleInertiaRequests::class,
+            \CodeZero\LocalizedRoutes\Middleware\SetLocale::class,
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
         ]);
 
