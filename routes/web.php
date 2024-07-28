@@ -12,6 +12,8 @@ Route::get('/locale/{locale}', function($locale) {
     return redirect()->back();
 })->name('language');
 
+Route::post('/contact', [HomeController::class, 'send'])->name('contact.post');
+
 Route::localized(function() {
     Route::get('/', [HomeController::class, 'landing'])->name('home');
     Route::get(__('routes.legal'), [HomeController::class, 'legal'])->name('legal');

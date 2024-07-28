@@ -41,21 +41,16 @@ class HomeController extends Controller
         return view('front.contact');
     }
 
-    public function send(ContactRequest $request, Recaptcha $recaptcha)
+    public function send(ContactRequest $request)
     {
-        if ($recaptcha->validate($request->get('token'))) {
-            $contact = [];
-            $fields = ['email', 'name', 'subject', 'message'];
+        $contact = [];
+        $fields = ['email', 'name', 'subject', 'message'];
 
-            foreach ($fields as $field) {
-                $contact[$field] = $request->get($field);
-            }
-
-            Notification::route('mail', User::first()->email)->notify(new Contact($contact));
-
-        } else {
-            return redirect()->back()->with('error', "Le recaptcha n'est pas valide");
+        foreach ($fields as $field) {
+            $contact[$field] = $request->get($field);
         }
+
+        Notification::route('mail', User::first()->email)->notify(new Contact($contact));
 
         return redirect()->back();
     }
