@@ -50,7 +50,7 @@ RUN npm install && npm run build
 # Set permissions
 RUN chown -R appuser:appuser storage bootstrap/cache
 
-# Expose port 8080
-EXPOSE 8080
+# Expose port 80
+EXPOSE 80
 
 ENTRYPOINT ["sh", "/etc/entrypoint.sh"]
