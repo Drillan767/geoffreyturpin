@@ -14,7 +14,8 @@
 
 <main class="biography container mx-auto mt-12 md:px-5 xl:px-0">
     <section class="user">
-        <img src="{{ $user->picture }}" alt="Geoffrey Turpin" />
+        <!-- <img src="{{ $user->picture }}" alt="Geoffrey Turpin" /> -->
+         <img src="/images/geoffrey.jpg" alt="Geoffrey Turpin" />
 
         <div class="description">
             <h1 class="harrison">{{ $user->name }}</h1>
