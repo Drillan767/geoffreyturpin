@@ -17,10 +17,10 @@ type Biography struct {
 }
 
 type SocialNetwork struct {
-	ID      uint32 `json:"id"`
-	Name    string `json:"name"`
-	Url     string `json:"url"`
-	Column4 string `json:"column_4"`
+	ID   uint32 `json:"id"`
+	Name string `json:"name"`
+	Url  string `json:"url"`
+	Icon string `json:"icon"`
 }
 
 type User struct {
