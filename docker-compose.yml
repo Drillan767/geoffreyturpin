@@ -1,0 +1,11 @@
+services:
+  db:
+    image: mariadb:latest
+    ports:
+      - "3306:3306"
+    environment:
+      MARIADB_ROOT_PASSWORD: password
+      MARIADB_ROOT_HOST: '%'
+      MARIADB_DATABASE: geoffreyturpin
+      MARIADB_USER: user
+      MARIADB_PASSWORD: password
