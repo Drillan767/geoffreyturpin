@@ -18,3 +18,13 @@ Composer, interpretor, living God.
   - [ ] Biography
   - [ ] Composition
   - [ ] Blog posts
+
+# Current stack
+
+
+# Libraries I've been recommended
+
+- [SQLc](https://pkg.go.dev/github.com/sqlc-dev/sqlc)
+- [crypto/rand](https://pkg.go.dev/crypto/rand)
+- [golang-jwt/jwt](https://pkg.go.dev/github.com/golang-jwt/jwt/v5)
+- [go-playground/validator](https://pkg.go.dev/github.com/go-playground/validator/v10)
