@@ -20,11 +20,11 @@ migrate-create:
 
 # Run migrations
 migrate-up:
-	migrate -path internal/database/migrations -database "$(DB_URL)" up
+	migrate -path internal/database/migrations -database "mysql://$(DATABASE_URL)" up
 
 # Rollback migrations
 migrate-down:
-	migrate -path internal/database/migrations -database "$(DB_URL)" down 1
+	migrate -path internal/database/migrations -database "mysql://$(DATABASE_URL)" down 1
 
 # Generate sqlc code
 sqlc:
@@ -32,7 +32,7 @@ sqlc:
 
 # Build Vue for production
 build-vue:
-	cd web && npm run build
+	cd front && yarn build
 
 # Build everything
 build: build-vue
