@@ -2,6 +2,7 @@ package config
 
 import (
 	"os"
+	"strings"
 	"time"
 )
 
@@ -10,6 +11,7 @@ type Config struct {
 	ServerPort     string
 	DatabaseURL    string
 	DatabaseDriver string
+	AllowedOrigin  []string
 
 	JWTSecret   string
 	JWTExpirity time.Duration
@@ -36,6 +38,7 @@ func Load() *Config {
 		ServerPort:     getEnv("SERVER_PORT", "3000"),
 		DatabaseURL:    getEnv("DATABASE_URL", "user:password@tcp/geoffreyturpin"),
 		DatabaseDriver: getEnv("DATABASE_DRIVER", "mysql"),
+		AllowedOrigin:  strings.Split(getEnv("ALLOWED_ORIGIN", ""), " "),
 
 		JWTSecret:   getEnv("JWT_SECRET_TOKEN", ""),
 		JWTExpirity: duration,

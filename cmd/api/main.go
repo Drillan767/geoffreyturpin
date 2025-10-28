@@ -2,11 +2,13 @@ package main
 
 import (
 	"log"
+	"time"
 
 	"geoffreyturpin/internal/config"
 	database "geoffreyturpin/internal/database"
 	"geoffreyturpin/internal/routes"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 
 	"github.com/joho/godotenv"
@@ -40,6 +42,17 @@ func main() {
 	defer db.Close()
 
 	router := gin.New()
+
+	// Configure CORS middleware
+	router.Use(cors.New(cors.Config{
+		AllowOrigins:     cfg.AllowedOrigin,
+		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
+
 	routes.RegisterAPIRoutes(router, cfg, db)
 
 	log.Printf("Server starting on %s", cfg.ServerPort)
