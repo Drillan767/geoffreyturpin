@@ -1,6 +1,6 @@
 -- name: CreateSocialNetwork :execresult
-INSERT INTO social_networks (name, url, icon)
-VALUES (?, ?, ?);
+INSERT INTO social_networks (platform, url)
+VALUES (?, ?);
 
 -- name: GetSocialNetwork :one
 SELECT * FROM social_networks
@@ -12,7 +12,7 @@ ORDER BY name;
 
 -- name: UpdateSocialNetwork :exec
 UPDATE social_networks
-SET name = ?, url = ?, icon = ?
+SET platform = ?, url = ?
 WHERE id = ?;
 
 -- name: DeleteSocialNetwork :exec

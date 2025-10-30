@@ -11,18 +11,17 @@ import (
 )
 
 const createSocialNetwork = `-- name: CreateSocialNetwork :execresult
-INSERT INTO social_networks (name, url, icon)
-VALUES (?, ?, ?)
+INSERT INTO social_networks (platform, url)
+VALUES (?, ?)
 `
 
 type CreateSocialNetworkParams struct {
-	Name string `json:"name"`
-	Url  string `json:"url"`
-	Icon string `json:"icon"`
+	Platform string `json:"platform"`
+	Url      string `json:"url"`
 }
 
 func (q *Queries) CreateSocialNetwork(ctx context.Context, arg CreateSocialNetworkParams) (sql.Result, error) {
-	return q.db.ExecContext(ctx, createSocialNetwork, arg.Name, arg.Url, arg.Icon)
+	return q.db.ExecContext(ctx, createSocialNetwork, arg.Platform, arg.Url)
 }
 
 const deleteSocialNetwork = `-- name: DeleteSocialNetwork :exec
@@ -36,24 +35,19 @@ func (q *Queries) DeleteSocialNetwork(ctx context.Context, id uint32) error {
 }
 
 const getSocialNetwork = `-- name: GetSocialNetwork :one
-SELECT id, name, url, icon FROM social_networks
+SELECT id, platform, url FROM social_networks
 WHERE id = ?
 `
 
 func (q *Queries) GetSocialNetwork(ctx context.Context, id uint32) (SocialNetwork, error) {
 	row := q.db.QueryRowContext(ctx, getSocialNetwork, id)
 	var i SocialNetwork
-	err := row.Scan(
-		&i.ID,
-		&i.Name,
-		&i.Url,
-		&i.Icon,
-	)
+	err := row.Scan(&i.ID, &i.Platform, &i.Url)
 	return i, err
 }
 
 const listSocialNetworks = `-- name: ListSocialNetworks :many
-SELECT id, name, url, icon FROM social_networks
+SELECT id, platform, url FROM social_networks
 ORDER BY name
 `
 
@@ -66,12 +60,7 @@ func (q *Queries) ListSocialNetworks(ctx context.Context) ([]SocialNetwork, erro
 	items := []SocialNetwork{}
 	for rows.Next() {
 		var i SocialNetwork
-		if err := rows.Scan(
-			&i.ID,
-			&i.Name,
-			&i.Url,
-			&i.Icon,
-		); err != nil {
+		if err := rows.Scan(&i.ID, &i.Platform, &i.Url); err != nil {
 			return nil, err
 		}
 		items = append(items, i)
@@ -87,23 +76,17 @@ func (q *Queries) ListSocialNetworks(ctx context.Context) ([]SocialNetwork, erro
 
 const updateSocialNetwork = `-- name: UpdateSocialNetwork :exec
 UPDATE social_networks
-SET name = ?, url = ?, icon = ?
+SET platform = ?, url = ?
 WHERE id = ?
 `
 
 type UpdateSocialNetworkParams struct {
-	Name string `json:"name"`
-	Url  string `json:"url"`
-	Icon string `json:"icon"`
-	ID   uint32 `json:"id"`
+	Platform string `json:"platform"`
+	Url      string `json:"url"`
+	ID       uint32 `json:"id"`
 }
 
 func (q *Queries) UpdateSocialNetwork(ctx context.Context, arg UpdateSocialNetworkParams) error {
-	_, err := q.db.ExecContext(ctx, updateSocialNetwork,
-		arg.Name,
-		arg.Url,
-		arg.Icon,
-		arg.ID,
-	)
+	_, err := q.db.ExecContext(ctx, updateSocialNetwork, arg.Platform, arg.Url, arg.ID)
 	return err
 }

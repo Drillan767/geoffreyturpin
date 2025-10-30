@@ -16,11 +16,57 @@ type Biography struct {
 	CreatedAt sql.NullTime `json:"created_at"`
 }
 
+type Inquiry struct {
+	ID       uint32 `json:"id"`
+	FullName string `json:"full_name"`
+	Email    string `json:"email"`
+	Subject  string `json:"subject"`
+	Message  string `json:"message"`
+	IsRead   bool   `json:"is_read"`
+}
+
+type PortfolioInfo struct {
+	ID                uint32         `json:"id"`
+	HeroMessage       sql.NullString `json:"hero_message"`
+	HeroPlaylistUrl   sql.NullString `json:"hero_playlist_url"`
+	Biography         sql.NullString `json:"biography"`
+	ProfilePictureUrl sql.NullString `json:"profile_picture_url"`
+	WorkPhilosophy    sql.NullString `json:"work_philosophy"`
+	ClosingPhrase     sql.NullString `json:"closing_phrase"`
+	LegalMentions     sql.NullString `json:"legal_mentions"`
+}
+
+type Project struct {
+	ID               uint32         `json:"id"`
+	Title            string         `json:"title"`
+	ProjectType      string         `json:"project_type"`
+	ShortDescription string         `json:"short_description"`
+	Description      sql.NullString `json:"description"`
+	AudioUrl         sql.NullString `json:"audio_url"`
+	ProjectDate      string         `json:"project_date"`
+}
+
+type Service struct {
+	ID           uint32 `json:"id"`
+	Name         string `json:"name"`
+	Description  string `json:"description"`
+	DisplayOrder int32  `json:"display_order"`
+}
+
 type SocialNetwork struct {
-	ID   uint32 `json:"id"`
-	Name string `json:"name"`
-	Url  string `json:"url"`
-	Icon string `json:"icon"`
+	ID       uint32 `json:"id"`
+	Platform string `json:"platform"`
+	Url      string `json:"url"`
+}
+
+type Testimonial struct {
+	ID              uint32         `json:"id"`
+	ClientName      string         `json:"client_name"`
+	ClientTitle     sql.NullString `json:"client_title"`
+	TestimonialText string         `json:"testimonial_text"`
+	DisplayOrder    int32          `json:"display_order"`
+	CreatedAt       time.Time      `json:"created_at"`
+	UpdatedAt       time.Time      `json:"updated_at"`
 }
 
 type User struct {
@@ -31,4 +77,11 @@ type User struct {
 	Picture   sql.NullString `json:"picture"`
 	Biography sql.NullString `json:"biography"`
 	CreatedAt time.Time      `json:"created_at"`
+}
+
+type WorkingProcess struct {
+	ID          uint32 `json:"id"`
+	Title       string `json:"title"`
+	Description string `json:"description"`
+	StepNumber  int32  `json:"step_number"`
 }

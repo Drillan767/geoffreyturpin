@@ -11,21 +11,53 @@ import (
 
 type Querier interface {
 	CreateBiography(ctx context.Context, arg CreateBiographyParams) (sql.Result, error)
+	CreateInquiry(ctx context.Context, arg CreateInquiryParams) (sql.Result, error)
+	CreatePortfolioInfo(ctx context.Context, arg CreatePortfolioInfoParams) (sql.Result, error)
+	CreateProject(ctx context.Context, arg CreateProjectParams) (sql.Result, error)
+	CreateService(ctx context.Context, arg CreateServiceParams) (sql.Result, error)
 	CreateSocialNetwork(ctx context.Context, arg CreateSocialNetworkParams) (sql.Result, error)
+	CreateTestimonial(ctx context.Context, arg CreateTestimonialParams) (sql.Result, error)
 	CreateUser(ctx context.Context, arg CreateUserParams) (sql.Result, error)
+	CreateWorkingProcess(ctx context.Context, arg CreateWorkingProcessParams) (sql.Result, error)
 	DeleteBiography(ctx context.Context, id uint32) error
+	DeleteInquiry(ctx context.Context, id uint32) error
+	DeletePortfolioInfo(ctx context.Context, id uint32) error
+	DeleteProject(ctx context.Context, id uint32) error
+	DeleteService(ctx context.Context, id uint32) error
 	DeleteSocialNetwork(ctx context.Context, id uint32) error
+	DeleteTestimonial(ctx context.Context, id uint32) error
+	DeleteWorkingProcess(ctx context.Context, id uint32) error
 	GetBiography(ctx context.Context, id uint32) (Biography, error)
+	GetInquiry(ctx context.Context, id uint32) (Inquiry, error)
+	GetPortfolioInfo(ctx context.Context, id uint32) (PortfolioInfo, error)
+	GetProject(ctx context.Context, id uint32) (Project, error)
+	GetService(ctx context.Context, id uint32) (Service, error)
 	GetSocialNetwork(ctx context.Context, id uint32) (SocialNetwork, error)
+	GetTestimonial(ctx context.Context, id uint32) (Testimonial, error)
 	GetUser(ctx context.Context, id uint32) (User, error)
 	GetUserByEmail(ctx context.Context, email string) (User, error)
+	GetWorkingProcess(ctx context.Context, id uint32) (WorkingProcess, error)
 	ListBiographies(ctx context.Context) ([]Biography, error)
+	ListInquiries(ctx context.Context) ([]Inquiry, error)
+	ListPortfolioInfos(ctx context.Context) ([]PortfolioInfo, error)
+	ListProjects(ctx context.Context) ([]Project, error)
+	ListProjectsByType(ctx context.Context, projectType string) ([]Project, error)
+	ListServices(ctx context.Context) ([]Service, error)
 	ListSocialNetworks(ctx context.Context) ([]SocialNetwork, error)
+	ListTestimonials(ctx context.Context) ([]Testimonial, error)
+	ListUnreadInquiries(ctx context.Context) ([]Inquiry, error)
 	ListUsers(ctx context.Context) ([]User, error)
+	ListWorkingProcesses(ctx context.Context) ([]WorkingProcess, error)
+	MarkInquiryAsRead(ctx context.Context, id uint32) error
 	UpdateBiography(ctx context.Context, arg UpdateBiographyParams) error
+	UpdatePortfolioInfo(ctx context.Context, arg UpdatePortfolioInfoParams) error
+	UpdateProject(ctx context.Context, arg UpdateProjectParams) error
+	UpdateService(ctx context.Context, arg UpdateServiceParams) error
 	UpdateSocialNetwork(ctx context.Context, arg UpdateSocialNetworkParams) error
+	UpdateTestimonial(ctx context.Context, arg UpdateTestimonialParams) error
 	UpdateUser(ctx context.Context, arg UpdateUserParams) error
 	UpdateUserProfile(ctx context.Context, arg UpdateUserProfileParams) error
+	UpdateWorkingProcess(ctx context.Context, arg UpdateWorkingProcessParams) error
 }
 
 var _ Querier = (*Queries)(nil)
