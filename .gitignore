@@ -4,3 +4,5 @@ front/node_modules
 .env.backup
 yarn-error.log
 **/.DS_Store
+public/*
+!public/.gitkeep
