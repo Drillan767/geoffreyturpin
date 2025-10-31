@@ -99,7 +99,7 @@ func (q *Queries) ListTestimonials(ctx context.Context) ([]Testimonial, error) {
 
 const updateTestimonial = `-- name: UpdateTestimonial :exec
 UPDATE testimonials
-SET client_name = ?, client_title = ?, testimonial_text = ?, display_order = ?, updated_at = NOW()
+SET client_name = ?, client_title = ?, testimonial_text = ?, updated_at = NOW()
 WHERE id = ?
 `
 
@@ -107,7 +107,6 @@ type UpdateTestimonialParams struct {
 	ClientName      string         `json:"client_name"`
 	ClientTitle     sql.NullString `json:"client_title"`
 	TestimonialText string         `json:"testimonial_text"`
-	DisplayOrder    int32          `json:"display_order"`
 	ID              uint32         `json:"id"`
 }
 
@@ -116,8 +115,23 @@ func (q *Queries) UpdateTestimonial(ctx context.Context, arg UpdateTestimonialPa
 		arg.ClientName,
 		arg.ClientTitle,
 		arg.TestimonialText,
-		arg.DisplayOrder,
 		arg.ID,
 	)
+	return err
+}
+
+const updateTestimonialOrder = `-- name: UpdateTestimonialOrder :exec
+UPDATE testimonials
+SET display_order = ?, updated_at = NOW()
+WHERE id = ?
+`
+
+type UpdateTestimonialOrderParams struct {
+	DisplayOrder int32  `json:"display_order"`
+	ID           uint32 `json:"id"`
+}
+
+func (q *Queries) UpdateTestimonialOrder(ctx context.Context, arg UpdateTestimonialOrderParams) error {
+	_, err := q.db.ExecContext(ctx, updateTestimonialOrder, arg.DisplayOrder, arg.ID)
 	return err
 }

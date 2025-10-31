@@ -85,25 +85,35 @@ func (q *Queries) ListServices(ctx context.Context) ([]Service, error) {
 	return items, nil
 }
 
-const updateService = `-- name: UpdateService :exec
+const reorderServices = `-- name: ReorderServices :exec
 UPDATE services
-SET name = ?, description = ?, display_order = ?
+SET display_order = ?
 WHERE id = ?
 `
 
-type UpdateServiceParams struct {
-	Name         string `json:"name"`
-	Description  string `json:"description"`
+type ReorderServicesParams struct {
 	DisplayOrder int32  `json:"display_order"`
 	ID           uint32 `json:"id"`
 }
 
+func (q *Queries) ReorderServices(ctx context.Context, arg ReorderServicesParams) error {
+	_, err := q.db.ExecContext(ctx, reorderServices, arg.DisplayOrder, arg.ID)
+	return err
+}
+
+const updateService = `-- name: UpdateService :exec
+UPDATE services
+SET name = ?, description = ?
+WHERE id = ?
+`
+
+type UpdateServiceParams struct {
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	ID          uint32 `json:"id"`
+}
+
 func (q *Queries) UpdateService(ctx context.Context, arg UpdateServiceParams) error {
-	_, err := q.db.ExecContext(ctx, updateService,
-		arg.Name,
-		arg.Description,
-		arg.DisplayOrder,
-		arg.ID,
-	)
+	_, err := q.db.ExecContext(ctx, updateService, arg.Name, arg.Description, arg.ID)
 	return err
 }

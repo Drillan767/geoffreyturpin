@@ -10,9 +10,14 @@ WHERE id = ?;
 SELECT * FROM services
 ORDER BY display_order ASC;
 
+-- name: ReorderServices :exec
+UPDATE services
+SET display_order = ?
+WHERE id = ?;
+
 -- name: UpdateService :exec
 UPDATE services
-SET name = ?, description = ?, display_order = ?
+SET name = ?, description = ?
 WHERE id = ?;
 
 -- name: DeleteService :exec

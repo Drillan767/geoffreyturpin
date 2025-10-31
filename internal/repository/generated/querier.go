@@ -49,12 +49,14 @@ type Querier interface {
 	ListUsers(ctx context.Context) ([]User, error)
 	ListWorkingProcesses(ctx context.Context) ([]WorkingProcess, error)
 	MarkInquiryAsRead(ctx context.Context, id uint32) error
+	ReorderServices(ctx context.Context, arg ReorderServicesParams) error
 	UpdateBiography(ctx context.Context, arg UpdateBiographyParams) error
 	UpdatePortfolioInfo(ctx context.Context, arg UpdatePortfolioInfoParams) error
 	UpdateProject(ctx context.Context, arg UpdateProjectParams) error
 	UpdateService(ctx context.Context, arg UpdateServiceParams) error
 	UpdateSocialNetwork(ctx context.Context, arg UpdateSocialNetworkParams) error
 	UpdateTestimonial(ctx context.Context, arg UpdateTestimonialParams) error
+	UpdateTestimonialOrder(ctx context.Context, arg UpdateTestimonialOrderParams) error
 	UpdateUser(ctx context.Context, arg UpdateUserParams) error
 	UpdateUserProfile(ctx context.Context, arg UpdateUserProfileParams) error
 	UpdateWorkingProcess(ctx context.Context, arg UpdateWorkingProcessParams) error
