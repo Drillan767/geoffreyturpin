@@ -33,8 +33,6 @@ func main() {
 
 	db, err := database.DBClient(cfg.DatabaseDriver, cfg.DatabaseURL)
 
-	log.Println("DEBUG: DATABASE_URL =", cfg.DatabaseURL) // Add this
-
 	if err != nil {
 		log.Fatal("Failed to connect to database: ", err.Error())
 	}

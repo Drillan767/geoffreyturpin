@@ -38,7 +38,7 @@ func Load() *Config {
 		ServerPort:     getEnv("SERVER_PORT", "3000"),
 		DatabaseURL:    getEnv("DATABASE_URL", "user:password@tcp/geoffreyturpin"),
 		DatabaseDriver: getEnv("DATABASE_DRIVER", "mysql"),
-		AllowedOrigin:  strings.Split(getEnv("ALLOWED_ORIGIN", ""), " "),
+		AllowedOrigin:  strings.Split(getEnv("ALLOWED_ORIGINS", ""), " "),
 
 		JWTSecret:   getEnv("JWT_SECRET_TOKEN", ""),
 		JWTExpirity: duration,
