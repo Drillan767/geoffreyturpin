@@ -10,13 +10,14 @@ import (
 )
 
 type Querier interface {
+	CountTestimonials(ctx context.Context) (int64, error)
 	CreateBiography(ctx context.Context, arg CreateBiographyParams) (sql.Result, error)
 	CreateInquiry(ctx context.Context, arg CreateInquiryParams) (sql.Result, error)
 	CreatePortfolioInfo(ctx context.Context, arg CreatePortfolioInfoParams) (sql.Result, error)
 	CreateProject(ctx context.Context, arg CreateProjectParams) (sql.Result, error)
 	CreateService(ctx context.Context, arg CreateServiceParams) (sql.Result, error)
 	CreateSocialNetwork(ctx context.Context, arg CreateSocialNetworkParams) (sql.Result, error)
-	CreateTestimonial(ctx context.Context, arg CreateTestimonialParams) (sql.Result, error)
+	CreateTestimonial(ctx context.Context, arg CreateTestimonialParams) error
 	CreateUser(ctx context.Context, arg CreateUserParams) (sql.Result, error)
 	CreateWorkingProcess(ctx context.Context, arg CreateWorkingProcessParams) (sql.Result, error)
 	DeleteBiography(ctx context.Context, id uint32) error

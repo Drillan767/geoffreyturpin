@@ -60,13 +60,13 @@ type SocialNetwork struct {
 }
 
 type Testimonial struct {
-	ID              uint32         `json:"id"`
-	ClientName      string         `json:"client_name"`
-	ClientTitle     sql.NullString `json:"client_title"`
-	TestimonialText string         `json:"testimonial_text"`
-	DisplayOrder    int32          `json:"display_order"`
-	CreatedAt       time.Time      `json:"created_at"`
-	UpdatedAt       time.Time      `json:"updated_at"`
+	ID               uint32    `json:"id"`
+	ClientName       string    `json:"client_name"`
+	ClientOccupation string    `json:"client_occupation"`
+	TestimonialText  string    `json:"testimonial_text"`
+	DisplayOrder     int32     `json:"display_order"`
+	CreatedAt        time.Time `json:"created_at"`
+	UpdatedAt        time.Time `json:"updated_at"`
 }
 
 type User struct {

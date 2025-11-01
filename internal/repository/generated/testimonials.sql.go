@@ -7,28 +7,39 @@ package repository
 
 import (
 	"context"
-	"database/sql"
 )
 
-const createTestimonial = `-- name: CreateTestimonial :execresult
-INSERT INTO testimonials (client_name, client_title, testimonial_text, display_order)
+const countTestimonials = `-- name: CountTestimonials :one
+SELECT COUNT(*) from testimonials
+`
+
+func (q *Queries) CountTestimonials(ctx context.Context) (int64, error) {
+	row := q.db.QueryRowContext(ctx, countTestimonials)
+	var count int64
+	err := row.Scan(&count)
+	return count, err
+}
+
+const createTestimonial = `-- name: CreateTestimonial :exec
+INSERT INTO testimonials (client_name, client_occupation, testimonial_text, display_order)
 VALUES (?, ?, ?, ?)
 `
 
 type CreateTestimonialParams struct {
-	ClientName      string         `json:"client_name"`
-	ClientTitle     sql.NullString `json:"client_title"`
-	TestimonialText string         `json:"testimonial_text"`
-	DisplayOrder    int32          `json:"display_order"`
+	ClientName       string `json:"client_name"`
+	ClientOccupation string `json:"client_occupation"`
+	TestimonialText  string `json:"testimonial_text"`
+	DisplayOrder     int32  `json:"display_order"`
 }
 
-func (q *Queries) CreateTestimonial(ctx context.Context, arg CreateTestimonialParams) (sql.Result, error) {
-	return q.db.ExecContext(ctx, createTestimonial,
+func (q *Queries) CreateTestimonial(ctx context.Context, arg CreateTestimonialParams) error {
+	_, err := q.db.ExecContext(ctx, createTestimonial,
 		arg.ClientName,
-		arg.ClientTitle,
+		arg.ClientOccupation,
 		arg.TestimonialText,
 		arg.DisplayOrder,
 	)
+	return err
 }
 
 const deleteTestimonial = `-- name: DeleteTestimonial :exec
@@ -42,7 +53,7 @@ func (q *Queries) DeleteTestimonial(ctx context.Context, id uint32) error {
 }
 
 const getTestimonial = `-- name: GetTestimonial :one
-SELECT id, client_name, client_title, testimonial_text, display_order, created_at, updated_at FROM testimonials
+SELECT id, client_name, client_occupation, testimonial_text, display_order, created_at, updated_at FROM testimonials
 WHERE id = ?
 `
 
@@ -52,7 +63,7 @@ func (q *Queries) GetTestimonial(ctx context.Context, id uint32) (Testimonial, e
 	err := row.Scan(
 		&i.ID,
 		&i.ClientName,
-		&i.ClientTitle,
+		&i.ClientOccupation,
 		&i.TestimonialText,
 		&i.DisplayOrder,
 		&i.CreatedAt,
@@ -62,7 +73,7 @@ func (q *Queries) GetTestimonial(ctx context.Context, id uint32) (Testimonial, e
 }
 
 const listTestimonials = `-- name: ListTestimonials :many
-SELECT id, client_name, client_title, testimonial_text, display_order, created_at, updated_at FROM testimonials
+SELECT id, client_name, client_occupation, testimonial_text, display_order, created_at, updated_at FROM testimonials
 ORDER BY display_order ASC
 `
 
@@ -78,7 +89,7 @@ func (q *Queries) ListTestimonials(ctx context.Context) ([]Testimonial, error) {
 		if err := rows.Scan(
 			&i.ID,
 			&i.ClientName,
-			&i.ClientTitle,
+			&i.ClientOccupation,
 			&i.TestimonialText,
 			&i.DisplayOrder,
 			&i.CreatedAt,
@@ -99,21 +110,21 @@ func (q *Queries) ListTestimonials(ctx context.Context) ([]Testimonial, error) {
 
 const updateTestimonial = `-- name: UpdateTestimonial :exec
 UPDATE testimonials
-SET client_name = ?, client_title = ?, testimonial_text = ?, updated_at = NOW()
+SET client_name = ?, client_occupation = ?, testimonial_text = ?, updated_at = NOW()
 WHERE id = ?
 `
 
 type UpdateTestimonialParams struct {
-	ClientName      string         `json:"client_name"`
-	ClientTitle     sql.NullString `json:"client_title"`
-	TestimonialText string         `json:"testimonial_text"`
-	ID              uint32         `json:"id"`
+	ClientName       string `json:"client_name"`
+	ClientOccupation string `json:"client_occupation"`
+	TestimonialText  string `json:"testimonial_text"`
+	ID               uint32 `json:"id"`
 }
 
 func (q *Queries) UpdateTestimonial(ctx context.Context, arg UpdateTestimonialParams) error {
 	_, err := q.db.ExecContext(ctx, updateTestimonial,
 		arg.ClientName,
-		arg.ClientTitle,
+		arg.ClientOccupation,
 		arg.TestimonialText,
 		arg.ID,
 	)
