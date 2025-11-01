@@ -1,0 +1,21 @@
+---
+import SimpleForm from '../components/SimpleForm.vue'
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Vue Demo</title>
+	</head>
+	<body>
+		<nav>
+			<a href="/">Home</a> |
+			<a href="/biography">Biography</a>
+		</nav>
+		<h1>Vue Demo Page</h1>
+		<SimpleForm client:load />
+	</body>
+</html>
